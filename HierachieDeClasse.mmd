@@ -5,8 +5,7 @@ classDiagram
         +String SerieOrigine
         +Interacting(Protagonist autreProtagoniste)
     }
-    
-    %% Application de couleur à ShonenHero
+
     class ShonenHero {
         +String MainAbility
         +String Slogan
@@ -15,7 +14,6 @@ classDiagram
         +Empowering(cause: string)
     }
     
-    %% Application de couleur à SeinenHero
     class SeinenHero {
         +String Purpose
         +Float Accomplished
@@ -23,7 +21,6 @@ classDiagram
         +Interacting(Protagonist autreProtagoniste)
     }
     
-    %% Application de couleur à Season et Episode
     class Season {
         +Int Number
         +List<Episode> Episode
@@ -34,7 +31,6 @@ classDiagram
         +Int DurationInMinutes
     }
     
-    %% Application de couleur à Serie
     class Serie {
         +String Title
         +Int BeginningYear
@@ -43,7 +39,6 @@ classDiagram
         +CalculatingTotaleDuration()
     }
 
-    %% Application de couleur à l'interface
     class IBecomeStronger {
         <<interface>>
         +Empowering(cause: string)
