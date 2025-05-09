@@ -1,20 +1,59 @@
 classDiagram
-    Protagonist <|-- Duck
-    Protagonist <|-- Fish
-    Protagonist <|-- Zebra
-    Protagonist : +String SourceSerie
-    Protagonist : +String Name
-    Protagonist: +Interact(Protagonist autreProtagoniste)
-    class Duck{
-      +String beakColor
-      +swim()
-      +quack()
+    class Protagonist {
+        <<abstract>>
+        +String Nom
+        +String SerieOrigine
+        +Interacting(Protagonist autreProtagoniste)
     }
-    class Fish{
-      -int sizeInFeet
-      -canEat()
+    
+    %% Application de couleur à ShonenHero
+    class ShonenHero {
+        +String MainAbility
+        +String Slogan
+        +Fighting()
+        +Interacting(Protagonist autreProtagoniste)
+        +Empowering(cause: string)
     }
-    class Zebra{
-      +bool is_wild
-      +run()
+    
+    %% Application de couleur à SeinenHero
+    class SeinenHero {
+        +String Purpose
+        +Float Accomplished
+        +Reasoning()
+        +Interacting(Protagonist autreProtagoniste)
     }
+    
+    %% Application de couleur à Season et Episode
+    class Season {
+        +Int Number
+        +List<Episode> Episode
+    }
+    
+    class Episode {
+        +String Title
+        +Int DurationInMinutes
+    }
+    
+    %% Application de couleur à Serie
+    class Serie {
+        +String Title
+        +Int BeginningYear
+        +String Gender
+        +List<Season> Seasons
+        +CalculatingTotaleDuration()
+    }
+
+    %% Application de couleur à l'interface
+    class IBecomeStronger {
+        <<interface>>
+        +Empowering(cause: string)
+    }
+
+    %% Relations
+    Protagonist <|-- ShonenHero : inherits
+    Protagonist <|-- SeinenHero : inherits
+    ShonenHero ..|> IBecomeStronger : implements
+    Serie "1" -- "0..*" Season : contains
+    Season "1" -- "0..*" Episode : contains
+    Protagonist "0..*" -- "1" Serie : appearsIn
+

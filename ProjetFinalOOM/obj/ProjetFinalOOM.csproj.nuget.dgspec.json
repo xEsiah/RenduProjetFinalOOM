@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ConsoleApp1\\ConsoleApp1.csproj",
-        "projectName": "ConsoleApp1",
-        "projectPath": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj",
+        "projectName": "ProjetFinalOOM",
+        "projectPath": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj",
         "packagesPath": "C:\\Users\\thwei\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ConsoleApp1\\obj\\",
+        "outputPath": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thwei\\AppData\\Roaming\\NuGet\\NuGet.Config"
