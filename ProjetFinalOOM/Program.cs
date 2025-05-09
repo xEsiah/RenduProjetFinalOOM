@@ -117,14 +117,14 @@ public interface IBecomeStronger {
     void Empowering(string cause);
 }
 
-// public class Program
-// {
-//     public static void Main(string[] args)
-//     {
-//         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
-//         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
+        SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
 
-//         Naruto.Interacting(Guts);
-//         Guts.Interacting(Naruto);
-//     }
-// }
+        Naruto.Interacting(Guts);
+        Guts.Interacting(Naruto);
+    }
+}
