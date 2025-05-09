@@ -8,24 +8,46 @@
     public abstract void Interacting(Protagonist otherPortagonist);
 }
 
-public class Serie{
+public class Episode {
     public string Title { get; set; }
-    public int BeginningYear { get; set; }
-    public string Gender { get; set; }
-    List<Season> Season; 
-    public Serie(string title, int beginningYear, string gender){
+    public int DurationInMinutes { get; set; }
+
+    public Episode(string title, int durationInMinutes) {
         Title = title;
-        BeginningYear = beginningYear;
-        Gender = gender;
+        DurationInMinutes = durationInMinutes;
     }
 }
 
-public class Season{
+public class Season {
     public int Number { get; set; }
-    List<Episode> Episode;
+    public List<Episode> Episodes { get; set; }
+
+    public Season(int number, List<Episode> episodes) {
+        Number = number;
+        Episodes = episodes;
+    }
 }
 
-public class Episode{
-    public string Title;
-    public int DurationInMinutes;
+public class Serie {
+    public string Title { get; set; }
+    public int BeginningYear { get; set; }
+    public string Gender { get; set; }
+    public List<Season> Seasons { get; set; }
+
+    public Serie(string title, int beginningYear, string gender, List<Season> seasons) {
+        Title = title;
+        BeginningYear = beginningYear;
+        Gender = gender;
+        Seasons = seasons;
+    }
+
+    public int CalculatingTotalDuration() {
+        int totalDuration = 0;
+        foreach (var season in Seasons) {
+            foreach (var episode in season.Episodes) {
+                totalDuration += episode.DurationInMinutes;
+            }
+        }
+        return totalDuration;
+    }
 }
