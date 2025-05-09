@@ -1,16 +1,16 @@
 classDiagram
     class Protagonist {
         <<abstract>>
-        +String Nom
-        +String SerieOrigine
-        +Interacting(Protagonist autreProtagoniste)
+        +String Name
+        +String SourceSerie
+        +Interacting(Protagonist otherProtagonist)
     }
 
     class ShonenHero {
         +String MainAbility
         +String Slogan
         +Fighting()
-        +Interacting(Protagonist autreProtagoniste)
+        +Interacting(Protagonist otherProtagonist)
         +Empowering(cause: string)
     }
     
@@ -18,7 +18,7 @@ classDiagram
         +String Purpose
         +Float Accomplished
         +Reasoning()
-        +Interacting(Protagonist autreProtagoniste)
+        +Interacting(Protagonist otherProtagonist)
     }
     
     class Season {
@@ -35,7 +35,7 @@ classDiagram
         +String Title
         +Int BeginningYear
         +String Gender
-        +List<Season> Seasons
+        +List<Season> Season
         +CalculatingTotaleDuration()
     }
 
