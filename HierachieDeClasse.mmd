@@ -1,0 +1,20 @@
+classDiagram
+    Protagonist <|-- Duck
+    Protagonist <|-- Fish
+    Protagonist <|-- Zebra
+    Protagonist : +String SourceSerie
+    Protagonist : +String Name
+    Protagonist: +Interact(Protagonist autreProtagoniste)
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+    }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+    }
+    class Zebra{
+      +bool is_wild
+      +run()
+    }
