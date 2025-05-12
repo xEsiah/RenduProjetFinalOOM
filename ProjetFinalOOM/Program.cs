@@ -128,7 +128,7 @@ public class Program
             new Serie(
                 "Naruto",
                 2002,
-                "Shonen",
+                "Aventure",
                 new List<Season>
                 {
                     new Season(1, new List<Episode>
@@ -162,27 +162,27 @@ public class Program
                 }
             ),
             new Serie(
-                "Fullmetal Alchemist : Brotherhood",
-                2009,
-                "Aventure",
+                "Black Lagoon",
+                2006,
+                "Action",
                 new List<Season>
                 {
                     new Season(1, new List<Episode>
                     {
-                        new Episode("Alchimiste Fullmetal", 24),
-                        new Episode("Le premier jour", 23)
+                        new Episode("The Black Lagoon", 24),
+                        new Episode("Mangrove Heaven", 23)
                     }),
                     new Season(2, new List<Episode>
                     {
-                        new Episode("Le cinquième laboratoire", 25),
-                        new Episode("L'émissaire de l'Est", 26)
+                        new Episode("Bloodsport Fairytale", 25),
+                        new Episode("Greenback Jane", 26)
                     })
                 }
             ),
             new Serie(
                 "One Piece",
                 1999,
-                "Shonen",
+                "Aventure",
                 new List<Season>
                 {
                     new Season(1, new List<Episode>
@@ -219,16 +219,32 @@ public class Program
     }
     public static void Main()
     {   
+        Console.WriteLine("\nAffichage de la méthode interaction: ");
         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
         Naruto.Interacting(Guts);
         Guts.Interacting(Naruto);
 
 
+        Console.WriteLine("\nAffichage de tous les animes renseignés: ");
         List<Serie> animeList = CreateAnimeSeries();
         foreach (var serie in animeList)
         {
-            Console.WriteLine($"{serie.Title} - Durée Totale de l'anime: {serie.CalculatingTotalDuration()} minutes");
+            Console.WriteLine($"{serie.Title} \nDurée totale de l'anime: {serie.CalculatingTotalDuration()} minutes | Genre: {serie.Genre} | Année de 1re diffusion: {serie.BeginningYear} ");
+        }   // Les durées totales sont incorrectes dans l'exemple car tous les épisodes 
+            // de chaque saison ne sont pas renseignés
+
+
+        Console.WriteLine("\nAffichage des animes d'action parru(s) avant 2010: ");
+        var actionBefore2010 = from s in animeList
+                       where s.BeginningYear <= 2010 && s.Genre == "Action"
+                       select s.Title;
+        foreach (var title in actionBefore2010)
+        {
+            Console.WriteLine($"- {title}");
         }
+
+        
+        Console.Write("Episode renseigné le plus long :");
     }
 }
