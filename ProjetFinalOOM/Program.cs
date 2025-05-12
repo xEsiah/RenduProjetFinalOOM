@@ -300,7 +300,7 @@ public class Program
         Console.Write("\n\nAffichage des séries et de leur nombres d'épisodes: ");
 
         List<Serie> animeListTitleNumberEp = animeList;
-        void TitleAndTotalOfEpisodesSQL(List<Serie> animeListFunc)
+        void TitleAndTotalOfEpisodes(List<Serie> animeListFunc)
         {
             Console.WriteLine("\n\nAffichage des séries et de leur nombre total d'épisodes :");
 
@@ -319,6 +319,6 @@ public class Program
                 Console.WriteLine($"- {item.Title} : {item.TotalEpisodes} épisodes");
             }
         }
-        TitleAndTotalOfEpisodesSQL(animeList);
+        TitleAndTotalOfEpisodes(animeList);
     }
 }
