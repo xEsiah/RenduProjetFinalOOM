@@ -244,7 +244,6 @@ public class Program
             Console.WriteLine($"- {title}");
         }
 
-        
         Console.Write("Episode renseigné le plus long :");
     }
 }

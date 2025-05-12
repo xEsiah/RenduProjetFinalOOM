@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjetFinalOOM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ea61ed3fd7e0aa78dd9aed76d9ec7ed2a4bcf6c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+003a3141a1087d658e7e99c2bb4056e2efd706b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjetFinalOOM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjetFinalOOM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
