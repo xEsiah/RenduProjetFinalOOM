@@ -298,5 +298,27 @@ public class Program
         CalculatingAverageDuration(animeList, "L'Attaque des Titans");
 
         Console.Write("\n\nAffichage des séries et de leur nombres d'épisodes: ");
+
+        List<Serie> animeListTitleNumberEp = animeList;
+        void TitleAndTotalOfEpisodesSQL(List<Serie> animeListFunc)
+        {
+            Console.WriteLine("\n\nAffichage des séries et de leur nombre total d'épisodes :");
+
+            var totalEpisodesBySerie =
+                from serie in animeListFunc
+                select new
+                {
+                    Title = serie.Title,
+                    TotalEpisodes = (from season in serie.Seasons
+                                    from episode in season.Episodes
+                                    select episode).Count()
+                };
+
+            foreach (var item in totalEpisodesBySerie)
+            {
+                Console.WriteLine($"- {item.Title} : {item.TotalEpisodes} épisodes");
+            }
+        }
+        TitleAndTotalOfEpisodesSQL(animeList);
     }
 }
