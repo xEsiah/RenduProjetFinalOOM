@@ -86,10 +86,10 @@ public class ShonenHero : Protagonist, IBecomeStronger {
     }
 
     public override void Interacting(Protagonist otherProtagonist) {
-        Console.WriteLine($"{Name} interacts with {otherProtagonist.Name}");
+        Console.WriteLine($"{Name} salue {otherProtagonist.Name}");
     }
     public void Empowering(string cause) {
-        Console.WriteLine($"{Name} becomes stronger because {cause}!");
+        Console.WriteLine($"{Name} power up grâce {cause}!");
     }
 }
 
@@ -111,7 +111,7 @@ public class SeinenHero : Protagonist {
         Accomplished = accomplished;
     }
     public override void Interacting(Protagonist otherProtagonist) {
-        Console.WriteLine($"{Name} interacts with {otherProtagonist.Name}");
+        Console.WriteLine($"{Name} salue {otherProtagonist.Name}");
     }
     
 }
@@ -219,9 +219,9 @@ public class Program
     }
     public static void Main()
     {   
-        Console.WriteLine("\nAffichage de la méthode interaction: ");
         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
+        Console.WriteLine("\nAffichage de la méthode interaction: ");
         Naruto.Interacting(Guts);
         Guts.Interacting(Naruto);
 
@@ -230,12 +230,13 @@ public class Program
         List<Serie> animeList = CreateAnimeSeries();
         foreach (var serie in animeList)
         {
-            Console.WriteLine($"{serie.Title} \nDurée totale de l'anime: {serie.CalculatingTotalDuration()} minutes | Genre: {serie.Genre} | Année de 1re diffusion: {serie.BeginningYear} ");
+            Console.WriteLine($"- {serie.Title} \nDurée totale de l'anime: {serie.CalculatingTotalDuration()} minutes | Genre: {serie.Genre} | Année de 1re diffusion: {serie.BeginningYear} ");
         }   // Les durées totales sont incorrectes dans l'exemple car tous les épisodes 
             // de chaque saison ne sont pas renseignés
 
 
         Console.WriteLine("\nAffichage des animes d'action parru(s) avant 2010: ");
+        // Synthaxe SQL de Linq
         var actionBefore2010 = from s in animeList
                        where s.BeginningYear <= 2010 && s.Genre == "Action"
                        select s.Title;
@@ -244,6 +245,13 @@ public class Program
             Console.WriteLine($"- {title}");
         }
 
-        Console.Write("Episode renseigné le plus long :");
+        // Synthaxe de méthode de Linq
+        var longestEpisode = animeList
+            .SelectMany(serie => serie.Seasons)           
+            .SelectMany(season => season.Episodes)    
+            .OrderByDescending(episode => episode.DurationInMinutes) 
+            .FirstOrDefault();
+
+        Console.WriteLine($"\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes");
     }
 }

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj",
+      "projectUniqueName": "C:\\Users\\thwei\\Documents\\Programmation\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj",
       "projectName": "ProjetFinalOOM",
-      "projectPath": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj",
+      "projectPath": "C:\\Users\\thwei\\Documents\\Programmation\\RenduProjetFinalOOM\\ProjetFinalOOM\\ProjetFinalOOM.csproj",
       "packagesPath": "C:\\Users\\thwei\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\thwei\\Desktop\\RenduProjetFinalOOM\\ProjetFinalOOM\\obj\\",
+      "outputPath": "C:\\Users\\thwei\\Documents\\Programmation\\RenduProjetFinalOOM\\ProjetFinalOOM\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\thwei\\AppData\\Roaming\\NuGet\\NuGet.Config"
