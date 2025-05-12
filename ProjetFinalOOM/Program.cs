@@ -255,21 +255,42 @@ public class Program
         Console.WriteLine($"\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes");
         
         // Méthode pour afficher toutes les séries en les groupant par leur genre
-        void AfficherAnimesParGenre(List<Serie> animeListFunc, string genre)
+        void DisplayAnimeByGender(List<Serie> animeListFunc, string genre)
         {
             Console.WriteLine($"\nAffichage de tous les animes de genre {genre} :");
-            var animesParGenre = from anime in animeListFunc
+            var animesByGender = from anime in animeListFunc
                                 where anime.Genre == genre
                                 select anime.Title;
 
-            foreach (var title in animesParGenre)
+            foreach (var title in animesByGender)
             {
                 Console.WriteLine($"- {title}");
             }
         }
-        AfficherAnimesParGenre(animeList, "Action");
-        AfficherAnimesParGenre(animeList, "Aventure");
-        AfficherAnimesParGenre(animeList, "Thriller");
-
+        DisplayAnimeByGender(animeList, "Action");
+        DisplayAnimeByGender(animeList, "Aventure");
+        DisplayAnimeByGender(animeList, "Thriller");
+       
+        void CalculatingAverageDuration(List<Serie> animeListFunc, string title)
+        {   
+            var episodeCount = 0;
+            var averageDuration = 0;
+            var durations = animeListFunc
+                .FirstOrDefault(s => s.Title == title)?
+                .Seasons?
+                .SelectMany(season => season.Episodes)
+                .Where(ep => ep?.DurationInMinutes != null)
+                .Select(ep => ep.DurationInMinutes)
+                .ToList();
+            foreach (var dur in durations)
+            {
+                averageDuration += dur;
+                episodeCount++;
+            }
+            
+            Console.WriteLine($"\nAffichage de la durée moyenne des épisodes de {title} : {averageDuration/episodeCount} minutes");
+        
+        }
+        CalculatingAverageDuration(animeList, "Death Note");
     }
 }
