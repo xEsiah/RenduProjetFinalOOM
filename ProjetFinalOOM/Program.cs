@@ -219,6 +219,7 @@ public class Program
     }
     public static void Main()
     {   
+        Console.WriteLine("\n------------- Début du programme -------------");
         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
         Console.WriteLine("\nAffichage de la méthode interaction: ");
@@ -230,16 +231,16 @@ public class Program
         List<Serie> animeList = CreateAnimeSeries();
         foreach (var serie in animeList)
         {
-            Console.WriteLine($"- {serie.Title} \nDurée totale de l'anime: {serie.CalculatingTotalDuration()} minutes | Genre: {serie.Genre} | Année de 1re diffusion: {serie.BeginningYear} ");
+            Console.WriteLine($"- {serie.Title} \nDurée totale de l'anime: {serie.CalculatingTotalDuration()} minutes | Genre: {serie.Genre} | Année de début de diffusion: {serie.BeginningYear} ");
         }   // Les durées totales sont incorrectes dans l'exemple car tous les épisodes 
             // de chaque saison ne sont pas renseignés
 
 
         Console.WriteLine("\nAffichage des animes d'action parru(s) avant 2010: ");
         // Synthaxe SQL de Linq
-        var actionBefore2010 = from s in animeList
-                       where s.BeginningYear <= 2010 && s.Genre == "Action"
-                       select s.Title;
+        var actionBefore2010 = from aB2 in animeList
+                       where aB2.BeginningYear <= 2010 && aB2.Genre == "Action"
+                       select aB2.Title;
         foreach (var title in actionBefore2010)
         {
             Console.WriteLine($"- {title}");
@@ -251,7 +252,24 @@ public class Program
             .SelectMany(season => season.Episodes)    
             .OrderByDescending(episode => episode.DurationInMinutes) 
             .FirstOrDefault();
-
         Console.WriteLine($"\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes");
+        
+        // Méthode pour afficher toutes les séries en les groupant par leur genre
+        void AfficherAnimesParGenre(List<Serie> animeListFunc, string genre)
+        {
+            Console.WriteLine($"\nAffichage de tous les animes de genre {genre} :");
+            var animesParGenre = from anime in animeListFunc
+                                where anime.Genre == genre
+                                select anime.Title;
+
+            foreach (var title in animesParGenre)
+            {
+                Console.WriteLine($"- {title}");
+            }
+        }
+        AfficherAnimesParGenre(animeList, "Action");
+        AfficherAnimesParGenre(animeList, "Aventure");
+        AfficherAnimesParGenre(animeList, "Thriller");
+
     }
 }
