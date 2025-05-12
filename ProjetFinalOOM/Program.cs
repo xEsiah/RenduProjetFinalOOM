@@ -219,15 +219,15 @@ public class Program
     }
     public static void Main()
     {   
-        Console.WriteLine("\n------------- Début du programme -------------");
-        ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
-        SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
+        Console.WriteLine("\n------------- Début du programme -------------\n");
+        ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Dattebayo");
+        SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Vengeance", 75.5f);
         Console.WriteLine("\nAffichage de la méthode interaction: ");
         Naruto.Interacting(Guts);
         Guts.Interacting(Naruto);
 
 
-        Console.WriteLine("\nAffichage de tous les animes renseignés: ");
+        Console.WriteLine("\n\nAffichage de tous les animes renseignés: ");
         List<Serie> animeList = CreateAnimeSeries();
         foreach (var serie in animeList)
         {
@@ -236,7 +236,7 @@ public class Program
             // de chaque saison ne sont pas renseignés
 
 
-        Console.WriteLine("\nAffichage des animes d'action parru(s) avant 2010: ");
+        Console.WriteLine("\n\nAffichage des animes d'action parru(s) avant 2010: ");
         // Synthaxe SQL de Linq
         var actionBefore2010 = from aB2 in animeList
                        where aB2.BeginningYear <= 2010 && aB2.Genre == "Action"
@@ -252,7 +252,7 @@ public class Program
             .SelectMany(season => season.Episodes)    
             .OrderByDescending(episode => episode.DurationInMinutes) 
             .FirstOrDefault();
-        Console.WriteLine($"\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes");
+        Console.WriteLine($"\n\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes\n");
         
         // Méthode pour afficher toutes les séries en les groupant par leur genre
         void DisplayAnimeByGender(List<Serie> animeListFunc, string genre)
@@ -271,6 +271,9 @@ public class Program
         DisplayAnimeByGender(animeList, "Aventure");
         DisplayAnimeByGender(animeList, "Thriller");
        
+
+       Console.Write("\n\nAffichage des durées moyennes des épisodes d'une série:\n");
+       // Méthode pour afficher la durée moyenne des épisodes d'une série
         void CalculatingAverageDuration(List<Serie> animeListFunc, string title)
         {   
             var episodeCount = 0;
@@ -288,9 +291,12 @@ public class Program
                 episodeCount++;
             }
             
-            Console.WriteLine($"\nAffichage de la durée moyenne des épisodes de {title} : {averageDuration/episodeCount} minutes");
+            Console.WriteLine($"Durée moyenne des épisodes de {title} : {averageDuration/episodeCount} minutes");
         
         }
         CalculatingAverageDuration(animeList, "Death Note");
+        CalculatingAverageDuration(animeList, "L'Attaque des Titans");
+
+        Console.Write("\n\nAffichage des séries et de leur nombres d'épisodes: ");
     }
 }
