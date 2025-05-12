@@ -55,16 +55,20 @@ public class Serie {
 
     public int CalculatingTotalDuration() {
         int totalDuration = 0;
+        if (Seasons != null) {
         foreach (var season in Seasons) {
-            foreach (var episode in season.Episodes) {
-                totalDuration += episode.DurationInMinutes;
+            if (season?.Episodes != null) {
+                foreach (var episode in season.Episodes) {
+                    totalDuration += episode?.DurationInMinutes ?? 0;
+                }
             }
         }
+    }
         return totalDuration;
     }
 }
 
-public class ShonenHero : Protagonist {
+public class ShonenHero : Protagonist, IBecomeStronger {
     private string mainAbility;
     private string slogan;
     // Pour la gestion des erreurs plus tard
@@ -87,9 +91,12 @@ public class ShonenHero : Protagonist {
     public override void Interacting(Protagonist otherProtagonist) {
         Console.WriteLine($"{Name} interacts with {otherProtagonist.Name}");
     }
+    public void Empowering(string cause) {
+        Console.WriteLine($"{Name} becomes stronger because {cause}!");
+    }
 }
 
-public class SeinenHero : Protagonist, IBecomeStronger {
+public class SeinenHero : Protagonist {
     private string purpose;
     private float accomplished;
     // Pour la gestion des erreurs plus tard
@@ -109,9 +116,7 @@ public class SeinenHero : Protagonist, IBecomeStronger {
     public override void Interacting(Protagonist otherProtagonist) {
         Console.WriteLine($"{Name} interacts with {otherProtagonist.Name}");
     }
-    public void Empowering(string cause) {
-        Console.WriteLine($"{Name} becomes stronger because {cause}!");
-    }
+    
 }
 public interface IBecomeStronger {
     void Empowering(string cause);
@@ -119,12 +124,114 @@ public interface IBecomeStronger {
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static List<Serie> CreateAnimeSeries()
     {
+        return new List<Serie>
+        {
+            new Serie(
+                "Naruto",
+                2002,
+                "Shonen",
+                new List<Season>
+                {
+                    new Season(1, new List<Episode>
+                    {
+                        new Episode("L'arrivée de Naruto Uzumaki !", 23),
+                        new Episode("Je m'appelle Konohamaru !", 22)
+                    }),
+                    new Season(2, new List<Episode>
+                    {
+                        new Episode("Le début de l'examen Chunin", 24),
+                        new Episode("La Forêt de la Mort", 26)
+                    })
+                }
+            ),
+            new Serie(
+                "L'Attaque des Titans",
+                2013,
+                "Action",
+                new List<Season>
+                {
+                    new Season(1, new List<Episode>
+                    {
+                        new Episode("À toi, dans 2000 ans", 25),
+                        new Episode("Ce jour-là", 24)
+                    }),
+                    new Season(2, new List<Episode>
+                    {
+                        new Episode("Le Titan Bestial", 25),
+                        new Episode("Historia", 26)
+                    })
+                }
+            ),
+            new Serie(
+                "Fullmetal Alchemist : Brotherhood",
+                2009,
+                "Aventure",
+                new List<Season>
+                {
+                    new Season(1, new List<Episode>
+                    {
+                        new Episode("Alchimiste Fullmetal", 24),
+                        new Episode("Le premier jour", 23)
+                    }),
+                    new Season(2, new List<Episode>
+                    {
+                        new Episode("Le cinquième laboratoire", 25),
+                        new Episode("L'émissaire de l'Est", 26)
+                    })
+                }
+            ),
+            new Serie(
+                "One Piece",
+                1999,
+                "Shonen",
+                new List<Season>
+                {
+                    new Season(1, new List<Episode>
+                    {
+                        new Episode("Je suis Luffy ! Celui qui deviendra le roi des pirates !", 24),
+                        new Episode("Le grand épéiste entre en scène ! Le chasseur de pirates Roronoa Zoro !", 25)
+                    }),
+                    new Season(2, new List<Episode>
+                    {
+                        new Episode("Premier obstacle ? Le géant Laboon apparaît", 26),
+                        new Episode("Une promesse entre hommes ! Luffy et la baleine se jurent de se revoir", 25)
+                    })
+                }
+            ),
+            new Serie(
+                "Death Note",
+                2006,
+                "Thriller",
+                new List<Season>
+                {
+                    new Season(1, new List<Episode>
+                    {
+                        new Episode("Renaissance", 22),
+                        new Episode("Confrontation", 23)
+                    }),
+                    new Season(2, new List<Episode>
+                    {
+                        new Episode("Impatience", 24),
+                        new Episode("Frénésie", 25)
+                    })
+                }
+            )
+        };
+    }
+    public static void Main(string[] args)
+    {   
         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
-
         Naruto.Interacting(Guts);
         Guts.Interacting(Naruto);
+
+
+        List<Serie> animeList = CreateAnimeSeries();
+        foreach (var serie in animeList)
+        {
+            Console.WriteLine($"{serie.Title} - Durée Totale de l'anime: {serie.CalculatingTotalDuration()} minutes");
+        }
     }
 }
