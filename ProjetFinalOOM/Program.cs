@@ -55,15 +55,12 @@ public class Serie {
 
     public int CalculatingTotalDuration() {
         int totalDuration = 0;
-        if (Seasons != null) {
+        
         foreach (var season in Seasons) {
-            if (season?.Episodes != null) {
                 foreach (var episode in season.Episodes) {
                     totalDuration += episode?.DurationInMinutes ?? 0;
                 }
             }
-        }
-    }
         return totalDuration;
     }
 }
@@ -220,7 +217,7 @@ public class Program
             )
         };
     }
-    public static void Main(string[] args)
+    public static void Main()
     {   
         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Believe it!");
         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Revenge", 75.5f);
