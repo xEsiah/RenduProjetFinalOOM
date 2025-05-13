@@ -1,4 +1,6 @@
-﻿public abstract class Protagonist {
+﻿using System.Runtime.CompilerServices;
+
+public abstract class Protagonist {
     protected string name;
     protected string sourceSerie;
     // Pour la gestion des erreurs plus tard
@@ -46,10 +48,10 @@ public class Serie {
     public string Genre { get; set; }
     public List<Season> Seasons { get; set; }
 
-    public Serie(string title, int beginningYear, string genre, List<Season> seasons) {
+    public Serie(string title, int beginningYear, string gender, List<Season> seasons) {
         Title = title;
         BeginningYear = beginningYear;
-        Genre = genre;
+        Genre = gender;
         Seasons = seasons;
     }
 
@@ -255,11 +257,11 @@ public class Program
         Console.WriteLine($"\n\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes\n");
         
         // Méthode pour afficher toutes les séries en les groupant par leur genre
-        void DisplayAnimeByGender(List<Serie> animeListFunc, string genre)
+        void DisplayAnimeByGender(List<Serie> animeListFunc, string gender)
         {
-            Console.WriteLine($"\nAffichage de tous les animes de genre {genre} :");
+            Console.WriteLine($"\nAffichage de tous les animes de genre {gender} :");
             var animesByGender = from anime in animeListFunc
-                                where anime.Genre == genre
+                                where anime.Genre == gender
                                 select anime.Title;
 
             foreach (var title in animesByGender)
@@ -292,33 +294,47 @@ public class Program
             }
             
             Console.WriteLine($"Durée moyenne des épisodes de {title} : {averageDuration/episodeCount} minutes");
-        
         }
         CalculatingAverageDuration(animeList, "Death Note");
         CalculatingAverageDuration(animeList, "L'Attaque des Titans");
 
-        Console.Write("\n\nAffichage des séries et de leur nombres d'épisodes: ");
 
         List<Serie> animeListTitleNumberEp = animeList;
         void TitleAndTotalOfEpisodes(List<Serie> animeListFunc)
         {
             Console.WriteLine("\n\nAffichage des séries et de leur nombre total d'épisodes :");
-
             var totalEpisodesBySerie =
                 from serie in animeListFunc
                 select new
                 {
-                    Title = serie.Title,
+                    TitleAnime = serie.Title,
                     TotalEpisodes = (from season in serie.Seasons
                                     from episode in season.Episodes
                                     select episode).Count()
                 };
-
             foreach (var item in totalEpisodesBySerie)
             {
-                Console.WriteLine($"- {item.Title} : {item.TotalEpisodes} épisodes");
+                Console.WriteLine($"- {item.TitleAnime} : {item.TotalEpisodes} épisodes");
             }
         }
         TitleAndTotalOfEpisodes(animeList);
+
+       void NumberOfEpisodesOfThisSeason(List<Serie> animeListFunc, string title, int number)
+        {
+            Console.WriteLine($"\n\nAffichage du nombre d'épisode d'une saison spécifique :");
+
+            var serie = animeListFunc.FirstOrDefault(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+
+            if (serie == null)
+            {
+                Console.WriteLine($"Aucune série trouvée avec le titre '{title}'.");
+                return;
+            }
+
+            var saison = serie.Seasons.FirstOrDefault(s => s.Number == number);
+
+            Console.WriteLine($"La saison {number} de {title} contient {saison.Episodes.Count} épisode(s)");
+        }
+        NumberOfEpisodesOfThisSeason(animeList, "Death Note", 2);
     }
 }
