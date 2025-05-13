@@ -287,7 +287,7 @@ public class Program
             .FirstOrDefault();
         Console.WriteLine($"\n\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes\n");
         
-                // Affiche toutes les séries en fonction du genre passé en paramètre
+        // Affiche toutes les séries en fonction du genre passé en paramètre
         void DisplayAnimeByGender(List<Serie> animeListFunc, string gender)
         {
             Console.WriteLine($"\nAffichage de tous les animes de genre {gender} :");
@@ -354,46 +354,64 @@ public class Program
 
         TitleAndTotalOfEpisodes(animeList);
 
-                // Affiche le nombre d’épisodes d’une saison donnée d’une série donnée
+        // Affiche le nombre d’épisodes d’une saison donnée d’une série donnée
         Console.WriteLine($"\n\nAffichage du nombre d'épisodes d'une saison spécifique :");
-        void NumberOfEpisodesOfThisSeason(List<Serie> animeListFunc, string title, int number)
+
+        int NumberOfEpisodesOfThisSeason(List<Serie> animeListFunc, string title, int number)
         {
-            var serie = animeListFunc.FirstOrDefault(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
-            if (serie == null)
+            try
             {
-                Console.WriteLine($"Aucune série trouvée avec le titre {title} !");
-                return;
-            }
+                var serie = animeListFunc.FirstOrDefault(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+                if (serie == null)
+                {
+                    Console.WriteLine($"[Erreur] Aucune série trouvée avec le titre « {title} ».");
+                    return -1;
+                }
 
-            if (number < 1)
+                if (number < 1)
+                {
+                    Console.WriteLine("[Erreur] Le numéro de saison doit être supérieur ou égal à 1.");
+                    return -1;
+                }
+
+                if (number > serie.Seasons.Count)
+                {
+                    Console.WriteLine($"[Erreur] La saison {number} de « {title} » dépasse le nombre total de saisons renseignées ({serie.Seasons.Count}).");
+                    return -1;
+                }
+
+                var saison = serie.Seasons.FirstOrDefault(s => s.Number == number);
+                if (saison == null)
+                {
+                    Console.WriteLine($"[Erreur] La saison {number} de « {title} » n'existe pas dans les données.");
+                    return -1;
+                }
+
+                if (saison.Episodes == null || saison.Episodes.Count == 0)
+                {
+                    Console.WriteLine($"[Avertissement] La saison {number} de « {title} » n'a pas d'épisode renseigné.");
+                    return 0;
+                }
+
+                Console.WriteLine($"La saison {number} de « {title} » contient {saison.Episodes.Count} épisode(s).");
+                return saison.Episodes.Count;
+            }
+            catch (ArgumentNullException)
             {
-                Console.WriteLine("La valeur minimale pour toute saison est 1 !");
-                return;
+                Console.WriteLine("[Exception] La liste des séries est nulle.");
+                return -1;
             }
-            if (number > serie.Seasons.Count)
+            catch (InvalidOperationException)
             {
-                Console.WriteLine($"La saison {number} de {title} dépasse le nombre total de saisons renseignées ({serie.Seasons.Count}) !");
-                return;
+                Console.WriteLine("[Exception] Une opération non valide a été tentée sur les données.");
+                return -1;
             }
-
-            var saison = serie.Seasons.FirstOrDefault(s => s.Number == number);
-
-            if (saison == null)
+            catch (Exception ex)
             {
-                // Ce cas n’arrivera que si la liste des saisons n’est pas compacte
-                Console.WriteLine($"La saison {number} de {title} n'existe pas dans les données !");
-                return;
+                Console.WriteLine($"[Exception] Une erreur inattendue s'est produite : {ex.Message}");
+                return -1;
             }
-
-            if (saison.Episodes == null || saison.Episodes.Count == 0)
-            {
-                Console.WriteLine($"La saison {number} de {title} n'a pas d'épisode renseigné !");
-                return;
-            }
-
-            Console.WriteLine($"La saison {number} de {title} contient {saison.Episodes.Count} épisode(s).");
         }
-
         // Cas de test : titre inexistant
         NumberOfEpisodesOfThisSeason(animeList, "Hunter X Hunter", 1);
 
