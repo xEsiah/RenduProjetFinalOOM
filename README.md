@@ -28,4 +28,6 @@ Il suffit d'ouvrir un terminal et d'entrer la commande "dotnet run" dans le repe
 
 ### FYI
 
-Les commentaires du code ont été optimisés par I.A.
+Les commentaires du code ont été optimisés par l'I.A.
+
+Les initialisations de série ont été complétées par l'I.A. (J'ai fait la structure mais les informations ne sont pas de moi)

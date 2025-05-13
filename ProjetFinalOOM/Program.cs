@@ -363,27 +363,25 @@ public class Program
             {
                 // Force une exception si la liste est nulle
                 if (animeListFunc == null)
-                    throw new ArgumentNullException(nameof(animeListFunc), "La liste fournie est nulle.");
+                    throw new ArgumentNullException(nameof(animeListFunc), "La liste est 'null' !");
 
-                // Recherche directe
+                // Recherche de la série
                 var serie = animeListFunc.First(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
 
-                // Si le numéro de saison est invalide
+                // Vérifie si le numéro de saison est valide
                 if (number < 1)
                     throw new ArgumentOutOfRangeException(nameof(number), "Le numéro de saison doit être >= 1 !");
 
+                // Recherche de la saison
                 var saison = serie.Seasons.First(s => s.Number == number);
 
-                // Force une exception si la liste d'épisodes est nulle
+                // Vérifie si la liste des épisodes est nulle
                 if (saison.Episodes == null)
-                    throw new NullReferenceException("La liste des épisodes est nulle.");
+                    throw new NullReferenceException("La liste des épisodes est 'null' !");
 
-                // Affiche le résultat s’il n’y a pas d’épisodes
+                // Lancer l'exception personnalisée si aucun épisode
                 if (saison.Episodes.Count == 0)
-                {
-                    Console.WriteLine($"La saison {number} de « {title} » n'a pas d'épisode renseigné.");
-                    return 0;
-                }
+                    throw new MissingEpisodeException(serie.Title, number);
 
                 Console.WriteLine($"La saison {number} de « {title} » contient {saison.Episodes.Count} épisode(s).");
                 return saison.Episodes.Count;
@@ -403,13 +401,17 @@ public class Program
                 Console.WriteLine($"[ArgumentOutOfRangeException] {exc.Message}");
                 return -1;
             }
+            catch (MissingEpisodeException exc)
+            {
+                Console.WriteLine(exc.Message);
+                return 0;
+            }
             catch (Exception exc)
             {
                 Console.WriteLine($"[Exception] Une erreur inattendue est survenue : {exc.Message}");
                 return -1;
             }
         }
-
         NumberOfEpisodesOfThisSeason(null, "Naruto", 1); // ArgumentNullException
         NumberOfEpisodesOfThisSeason(animeList, "Série Inconnue", 1); // InvalidOperationException
         NumberOfEpisodesOfThisSeason(animeList, "Naruto", 0); // ArgumentOutOfRangeException
@@ -418,3 +420,16 @@ public class Program
 
     }
 }
+public class MissingEpisodeException : Exception
+{
+    public string SeriesTitle { get; set; }
+    public int SeasonNumber { get; set; }
+
+    public MissingEpisodeException(string seriesTitle, int seasonNumber)
+        : base($"[MissingEpisodeException] La série « {seriesTitle} » n’a pas d’épisode dans la saison {seasonNumber}.")
+    {
+        SeriesTitle = seriesTitle;
+        SeasonNumber = seasonNumber;
+    }
+}
+
