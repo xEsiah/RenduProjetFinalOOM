@@ -1,17 +1,18 @@
-﻿using System.Runtime.CompilerServices;
-
+﻿// Classe abstraite pour tout protagoniste, assurant une base commune
 public abstract class Protagonist {
     protected string name;
     protected string sourceSerie;
-    // Pour la gestion des erreurs plus tard
+
+    // Propriété pour le nom du protagoniste (assure l'unicité du nom)
     public string Name {
         get { return name; }
-        set { name = value; } // S'assure qu'il n'y a qu'un nom
+        set { name = value; }
     }
 
+    // Propriété pour la série d’origine du personnage (une seule série par personnage)
     public string SourceSerie {
         get { return sourceSerie; }
-        set { sourceSerie = value; } // S'assure que le personnage ne vient que d'une série
+        set { sourceSerie = value; }
     }
 
     public Protagonist(string name, string sourceSerie) {
@@ -19,9 +20,11 @@ public abstract class Protagonist {
         SourceSerie = sourceSerie;
     }
 
+    // Méthode abstraite que chaque type de protagoniste devra implémenter
     public abstract void Interacting(Protagonist otherProtagonist);
 }
 
+// Classe Episode pour modéliser un épisode avec un titre et une durée
 public class Episode {
     public string Title { get; set; }
     public int DurationInMinutes { get; set; }
@@ -32,6 +35,7 @@ public class Episode {
     }
 }
 
+// Classe Season, contenant un numéro de saison et une liste d’épisodes
 public class Season {
     public int Number { get; set; }
     public List<Episode> Episodes { get; set; }
@@ -42,6 +46,7 @@ public class Season {
     }
 }
 
+// Classe Serie représentant une série complète avec ses saisons
 public class Serie {
     public string Title { get; set; }
     public int BeginningYear { get; set; }
@@ -55,30 +60,33 @@ public class Serie {
         Seasons = seasons;
     }
 
+    // Méthode pour calculer la durée totale de la série (toutes saisons et épisodes inclus)
     public int CalculatingTotalDuration() {
         int totalDuration = 0;
-        
         foreach (var season in Seasons) {
-                foreach (var episode in season.Episodes) {
-                    totalDuration += episode?.DurationInMinutes ?? 0;
-                }
+            foreach (var episode in season.Episodes) {
+                totalDuration += episode?.DurationInMinutes ?? 0;
             }
+        }
         return totalDuration;
     }
 }
 
+// Implémentation d’un héros typique de shonen (pouvoirs, slogans, etc.)
 public class ShonenHero : Protagonist, IBecomeStronger {
     private string mainAbility;
     private string slogan;
-    // Pour la gestion des erreurs plus tard
+
+    // Une compétence principale par personnage
     public string MainAbility {
         get { return mainAbility; } 
-        set { mainAbility = value; } // S'assure qu'il n'y a qu'une compétence principale par exemple
+        set { mainAbility = value; }
     }
 
+    // Un slogan distinctif par héros
     public string Slogan {
         get { return slogan; }
-        set { slogan = value; } // S'assure qu'il n'y a qu'un slogan principale par exemple
+        set { slogan = value; }
     }
 
     public ShonenHero(string name, string sourceSerie, string mainAbility, string slogan)
@@ -87,46 +95,57 @@ public class ShonenHero : Protagonist, IBecomeStronger {
         Slogan = slogan;
     }
 
+    // Interaction simple entre protagonistes
     public override void Interacting(Protagonist otherProtagonist) {
         Console.WriteLine($"{Name} salue {otherProtagonist.Name}");
     }
+
+    // Méthode spécifique à ce type de héros pour se renforcer
     public void Empowering(string cause) {
         Console.WriteLine($"{Name} power up grâce {cause}!");
     }
 }
 
+// Héros plus mature venant de seinen : motivations profondes et progression mesurée
 public class SeinenHero : Protagonist {
     private string purpose;
     private float accomplished;
-    // Pour la gestion des erreurs plus tard
+
     public string Purpose {
         get { return purpose; }
         set { purpose = value; }
     }
+
     public float Accomplished {
         get { return accomplished; }
         set { accomplished = value; }
     }
+
     public SeinenHero(string name, string sourceSerie, string purpose, float accomplished)
         : base(name, sourceSerie) {
         Purpose = purpose;
         Accomplished = accomplished;
     }
+
     public override void Interacting(Protagonist otherProtagonist) {
         Console.WriteLine($"{Name} salue {otherProtagonist.Name}");
     }
-    
 }
+
+// Interface spécifique aux héros de shonen qui évoluent au combat
 public interface IBecomeStronger {
     void Empowering(string cause);
 }
 
 public class Program
 {
+    // Méthode de création des séries avec leurs saisons et épisodes
     public static List<Serie> CreateAnimeSeries()
     {
         return new List<Serie>
         {
+            // Plusieurs séries sont initialisées ici avec des saisons et épisodes renseignés
+            // Certaines comme Bleach ont volontairement une saison vide pour tester les cas limites
             new Serie(
                 "Naruto",
                 2002,
@@ -216,70 +235,83 @@ public class Program
                         new Episode("Frénésie", 25)
                     })
                 }
+            ),
+            new Serie(
+                "Bleach",
+                2006,
+                "Thriller",
+                new List<Season>
+                {
+                    new Season(1, new List<Episode>
+                    {
+                       
+                    }),
+                }
             )
         };
     }
     public static void Main()
-    {   
+    {
         Console.WriteLine("\n------------- Début du programme -------------\n");
+
+        // Démonstration d’interaction entre un héros de shonen et un héros de seinen
         ShonenHero Naruto = new ShonenHero("Naruto", "Naruto", "Rasengan", "Dattebayo");
         SeinenHero Guts = new SeinenHero("Guts", "Berserk", "Vengeance", 75.5f);
         Console.WriteLine("\nAffichage de la méthode interaction: ");
         Naruto.Interacting(Guts);
         Guts.Interacting(Naruto);
 
-
+        // Affichage général des séries avec durée, genre et année
         Console.WriteLine("\n\nAffichage de tous les animes renseignés: ");
         List<Serie> animeList = CreateAnimeSeries();
         foreach (var serie in animeList)
         {
             Console.WriteLine($"- {serie.Title} \nDurée totale de l'anime: {serie.CalculatingTotalDuration()} minutes | Genre: {serie.Genre} | Année de début de diffusion: {serie.BeginningYear} ");
-        }   // Les durées totales sont incorrectes dans l'exemple car tous les épisodes 
-            // de chaque saison ne sont pas renseignés
+        }
 
-
+        // Requête Linq pour afficher les animes d’action sortis avant 2010
         Console.WriteLine("\n\nAffichage des animes d'action parru(s) avant 2010: ");
-        // Synthaxe SQL de Linq
         var actionBefore2010 = from aB2 in animeList
-                       where aB2.BeginningYear <= 2010 && aB2.Genre == "Action"
-                       select aB2.Title;
+                               where aB2.BeginningYear <= 2010 && aB2.Genre == "Action"
+                               select aB2.Title;
         foreach (var title in actionBefore2010)
         {
             Console.WriteLine($"- {title}");
         }
 
-        // Synthaxe de méthode de Linq
+        // Recherche de l’épisode ayant la plus longue durée dans toutes les séries
         var longestEpisode = animeList
-            .SelectMany(serie => serie.Seasons)           
-            .SelectMany(season => season.Episodes)    
-            .OrderByDescending(episode => episode.DurationInMinutes) 
+            .SelectMany(serie => serie.Seasons)
+            .SelectMany(season => season.Episodes)
+            .OrderByDescending(episode => episode.DurationInMinutes)
             .FirstOrDefault();
         Console.WriteLine($"\n\nEpisode le plus long renseigné: {longestEpisode.Title}, Durée: {longestEpisode.DurationInMinutes} minutes\n");
         
-        // Méthode pour afficher toutes les séries en les groupant par leur genre
+                // Affiche toutes les séries en fonction du genre passé en paramètre
         void DisplayAnimeByGender(List<Serie> animeListFunc, string gender)
         {
             Console.WriteLine($"\nAffichage de tous les animes de genre {gender} :");
             var animesByGender = from anime in animeListFunc
-                                where anime.Genre == gender
-                                select anime.Title;
+                                 where anime.Genre == gender
+                                 select anime.Title;
 
             foreach (var title in animesByGender)
             {
                 Console.WriteLine($"- {title}");
             }
         }
+
         DisplayAnimeByGender(animeList, "Action");
         DisplayAnimeByGender(animeList, "Aventure");
         DisplayAnimeByGender(animeList, "Thriller");
-       
 
-       Console.Write("\n\nAffichage des durées moyennes des épisodes d'une série:\n");
-       // Méthode pour afficher la durée moyenne des épisodes d'une série
+        // Calcul de la durée moyenne des épisodes d’une série spécifique
+        Console.Write("\n\nAffichage des durées moyennes des épisodes d'une série:\n");
         void CalculatingAverageDuration(List<Serie> animeListFunc, string title)
-        {   
+        {
             var episodeCount = 0;
             var averageDuration = 0;
+
             var durations = animeListFunc
                 .FirstOrDefault(s => s.Title == title)?
                 .Seasons?
@@ -287,19 +319,20 @@ public class Program
                 .Where(ep => ep?.DurationInMinutes != null)
                 .Select(ep => ep.DurationInMinutes)
                 .ToList();
+
             foreach (var dur in durations)
             {
                 averageDuration += dur;
                 episodeCount++;
             }
-            
-            Console.WriteLine($"Durée moyenne des épisodes de {title} : {averageDuration/episodeCount} minutes");
+
+            Console.WriteLine($"Durée moyenne des épisodes de {title} : {averageDuration / episodeCount} minutes");
         }
+
         CalculatingAverageDuration(animeList, "Death Note");
         CalculatingAverageDuration(animeList, "L'Attaque des Titans");
 
-
-        List<Serie> animeListTitleNumberEp = animeList;
+        // Affiche toutes les séries avec leur nombre total d’épisodes
         void TitleAndTotalOfEpisodes(List<Serie> animeListFunc)
         {
             Console.WriteLine("\n\nAffichage des séries et de leur nombre total d'épisodes :");
@@ -309,32 +342,71 @@ public class Program
                 {
                     TitleAnime = serie.Title,
                     TotalEpisodes = (from season in serie.Seasons
-                                    from episode in season.Episodes
-                                    select episode).Count()
+                                     from episode in season.Episodes
+                                     select episode).Count()
                 };
+
             foreach (var item in totalEpisodesBySerie)
             {
                 Console.WriteLine($"- {item.TitleAnime} : {item.TotalEpisodes} épisodes");
             }
         }
+
         TitleAndTotalOfEpisodes(animeList);
 
-       void NumberOfEpisodesOfThisSeason(List<Serie> animeListFunc, string title, int number)
+                // Affiche le nombre d’épisodes d’une saison donnée d’une série donnée
+        Console.WriteLine($"\n\nAffichage du nombre d'épisodes d'une saison spécifique :");
+        void NumberOfEpisodesOfThisSeason(List<Serie> animeListFunc, string title, int number)
         {
-            Console.WriteLine($"\n\nAffichage du nombre d'épisode d'une saison spécifique :");
-
             var serie = animeListFunc.FirstOrDefault(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
-
             if (serie == null)
             {
-                Console.WriteLine($"Aucune série trouvée avec le titre '{title}'.");
+                Console.WriteLine($"Aucune série trouvée avec le titre {title} !");
+                return;
+            }
+
+            if (number < 1)
+            {
+                Console.WriteLine("La valeur minimale pour toute saison est 1 !");
+                return;
+            }
+            if (number > serie.Seasons.Count)
+            {
+                Console.WriteLine($"La saison {number} de {title} dépasse le nombre total de saisons renseignées ({serie.Seasons.Count}) !");
                 return;
             }
 
             var saison = serie.Seasons.FirstOrDefault(s => s.Number == number);
 
-            Console.WriteLine($"La saison {number} de {title} contient {saison.Episodes.Count} épisode(s)");
+            if (saison == null)
+            {
+                // Ce cas n’arrivera que si la liste des saisons n’est pas compacte
+                Console.WriteLine($"La saison {number} de {title} n'existe pas dans les données !");
+                return;
+            }
+
+            if (saison.Episodes == null || saison.Episodes.Count == 0)
+            {
+                Console.WriteLine($"La saison {number} de {title} n'a pas d'épisode renseigné !");
+                return;
+            }
+
+            Console.WriteLine($"La saison {number} de {title} contient {saison.Episodes.Count} épisode(s).");
         }
-        NumberOfEpisodesOfThisSeason(animeList, "Death Note", 2);
+
+        // Cas de test : titre inexistant
+        NumberOfEpisodesOfThisSeason(animeList, "Hunter X Hunter", 1);
+
+        // Cas de test : saison 0 (invalide)
+        NumberOfEpisodesOfThisSeason(animeList, "Death Note", 0);
+
+        // Cas de test : saison au-delà du max
+        NumberOfEpisodesOfThisSeason(animeList, "Death Note", 3);
+
+        // Cas de test : saison présente mais sans épisodes
+        NumberOfEpisodesOfThisSeason(animeList, "Bleach", 1);
+
+        // Cas de test : saison correctement renseignée
+        NumberOfEpisodesOfThisSeason(animeList, "L'Attaque des Titans", 1);
     }
 }
