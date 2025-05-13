@@ -361,70 +361,60 @@ public class Program
         {
             try
             {
-                var serie = animeListFunc.FirstOrDefault(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
-                if (serie == null)
-                {
-                    Console.WriteLine($"[Erreur] Aucune série trouvée avec le titre « {title} ».");
-                    return -1;
-                }
+                // Force une exception si la liste est nulle
+                if (animeListFunc == null)
+                    throw new ArgumentNullException(nameof(animeListFunc), "La liste fournie est nulle.");
 
+                // Recherche directe
+                var serie = animeListFunc.First(s => s.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+
+                // Si le numéro de saison est invalide
                 if (number < 1)
-                {
-                    Console.WriteLine("[Erreur] Le numéro de saison doit être supérieur ou égal à 1.");
-                    return -1;
-                }
+                    throw new ArgumentOutOfRangeException(nameof(number), "Le numéro de saison doit être >= 1 !");
 
-                if (number > serie.Seasons.Count)
-                {
-                    Console.WriteLine($"[Erreur] La saison {number} de « {title} » dépasse le nombre total de saisons renseignées ({serie.Seasons.Count}).");
-                    return -1;
-                }
+                var saison = serie.Seasons.First(s => s.Number == number);
 
-                var saison = serie.Seasons.FirstOrDefault(s => s.Number == number);
-                if (saison == null)
-                {
-                    Console.WriteLine($"[Erreur] La saison {number} de « {title} » n'existe pas dans les données.");
-                    return -1;
-                }
+                // Force une exception si la liste d'épisodes est nulle
+                if (saison.Episodes == null)
+                    throw new NullReferenceException("La liste des épisodes est nulle.");
 
-                if (saison.Episodes == null || saison.Episodes.Count == 0)
+                // Affiche le résultat s’il n’y a pas d’épisodes
+                if (saison.Episodes.Count == 0)
                 {
-                    Console.WriteLine($"[Avertissement] La saison {number} de « {title} » n'a pas d'épisode renseigné.");
+                    Console.WriteLine($"La saison {number} de « {title} » n'a pas d'épisode renseigné.");
                     return 0;
                 }
 
                 Console.WriteLine($"La saison {number} de « {title} » contient {saison.Episodes.Count} épisode(s).");
                 return saison.Episodes.Count;
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException exc)
             {
-                Console.WriteLine("[Exception] La liste des séries est nulle.");
+                Console.WriteLine($"[ArgumentNullException] {exc.Message}");
                 return -1;
             }
             catch (InvalidOperationException)
             {
-                Console.WriteLine("[Exception] Une opération non valide a été tentée sur les données.");
+                Console.WriteLine("[InvalidOperationException] L'objet recherché n'existe pas dans la collection.");
                 return -1;
             }
-            catch (Exception ex)
+            catch (ArgumentOutOfRangeException exc)
             {
-                Console.WriteLine($"[Exception] Une erreur inattendue s'est produite : {ex.Message}");
+                Console.WriteLine($"[ArgumentOutOfRangeException] {exc.Message}");
+                return -1;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"[Exception] Une erreur inattendue est survenue : {exc.Message}");
                 return -1;
             }
         }
-        // Cas de test : titre inexistant
-        NumberOfEpisodesOfThisSeason(animeList, "Hunter X Hunter", 1);
 
-        // Cas de test : saison 0 (invalide)
-        NumberOfEpisodesOfThisSeason(animeList, "Death Note", 0);
+        NumberOfEpisodesOfThisSeason(null, "Naruto", 1); // ArgumentNullException
+        NumberOfEpisodesOfThisSeason(animeList, "Série Inconnue", 1); // InvalidOperationException
+        NumberOfEpisodesOfThisSeason(animeList, "Naruto", 0); // ArgumentOutOfRangeException
+        NumberOfEpisodesOfThisSeason(animeList, "Bleach", 1); // NullReferenceException si Episodes est null
+        NumberOfEpisodesOfThisSeason(animeList, "L'Attaque des Titans", 1); // Cas normal
 
-        // Cas de test : saison au-delà du max
-        NumberOfEpisodesOfThisSeason(animeList, "Death Note", 3);
-
-        // Cas de test : saison présente mais sans épisodes
-        NumberOfEpisodesOfThisSeason(animeList, "Bleach", 1);
-
-        // Cas de test : saison correctement renseignée
-        NumberOfEpisodesOfThisSeason(animeList, "L'Attaque des Titans", 1);
     }
 }
