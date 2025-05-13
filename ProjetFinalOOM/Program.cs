@@ -97,7 +97,7 @@ public class ShonenHero : Protagonist, IBecomeStronger {
 
     // Interaction simple entre protagonistes
     public override void Interacting(Protagonist otherProtagonist) {
-        Console.WriteLine($"{Name} salue {otherProtagonist.Name}");
+        Console.WriteLine($"{Name} salue avec respect {otherProtagonist.Name}");
     }
 
     // Méthode spécifique à ce type de héros pour se renforcer
