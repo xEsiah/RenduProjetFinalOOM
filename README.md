@@ -17,3 +17,15 @@ Nous considérons qu'une saison à forcément au moins 1 épisode.
 Dans la classe SeinenHero: +Float Accomplished correspond au % de progression de la variable Purpose qui précède, Float allant de 0,0 à 1 si le but est accompli à la fin de la série.
 
 ## Code
+
+### Initialiser le projet
+
+**Pour se faire il faut se placer dans un repertoire via le terminal VSCode et executer "_dotnet new console_". Suite à cela il faut overwrite le fichier _Program.cs_ générer dans ce nouveau repertoire par celui _ci-joint_, de même pour le fichier "_ProjetFinalOOM\obj\Debug\net9.0\ProjetFinalOOM.GlobalUsings.g.cs_" afin d'avoir les mêmes bibliothéques.**
+
+### Lancer le programme
+
+Il suffit d'ouvrir un terminal et d'entrer la commande "dotnet run" dans le repertoire /RenduProjetFinalOOM/ProjetFinalOOM et de regarder les retours dans la console.
+
+### FYI
+
+Les commentaires du code ont été optimisés par I.A.
