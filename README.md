@@ -1,33 +1,42 @@
 # RenduProjetFinalOOM
 
-(Final project to validate the OOM module)
+🎓 _Final project to validate the Object-Oriented Modeling (OOM) module._
 
-## UML
+---
 
-### Partie de l'UML orientée sur les séries
+## 🧩 UML Overview
 
-Nous considérons qu'on Protagoniste n'apparait que dans 1 série ce qui dans l'absolue n'est pas forcément vrai (cf: Naruto apparait dans Naruto, Naruto Shippuden & Boruto).
+### 📺 Series-related UML
 
-Nous considérons qu'une série contient au moins une saison même si cela est sujet à débat car peut-on parler de saison pour les séries en "one shot" (cf: Death Note).
+- We assume a Protagonist appears in only one series, which may not always be true (e.g., Naruto appears in Naruto, Naruto Shippuden & Boruto).  
+- A series contains at least one season, although this can be debated for one-shot series (e.g., Death Note).  
+- Each season must have at least one episode.
 
-Nous considérons qu'une saison à forcément au moins 1 épisode.
+### 👥 Characters-related UML
 
-### Partie de l'UML orientée sur les personnages
+- In the `SeinenHero` class, the `Accomplished` attribute (float) represents the progress percentage (0.0 to 1.0) of the `Purpose` variable, indicating if the goal is achieved by the end of the series.
 
-Dans la classe SeinenHero: +Float Accomplished correspond au % de progression de la variable Purpose qui précède, Float allant de 0,0 à 1 si le but est accompli à la fin de la série.
+---
 
-## Code
+## 💻 Code
 
-### Initialiser le projet
+### 🚀 Project Initialization
 
-**Pour se faire il faut se placer dans un repertoire via le terminal VSCode et executer "_dotnet new console_". Suite à cela il faut overwrite le fichier _Program.cs_ générer dans ce nouveau repertoire par celui _ci-joint_, de même pour le fichier "_ProjetFinalOOM\obj\Debug\net9.0\ProjetFinalOOM.GlobalUsings.g.cs_" afin d'avoir les mêmes bibliothéques.**
+To initialize the project:  
+- Open a terminal in your desired directory.  
+- Run `dotnet new console`.  
+- Replace the generated `Program.cs` file with the one provided in this repository.  
+- Similarly, replace the `ProjetFinalOOM.GlobalUsings.g.cs` file located in `ProjetFinalOOM\obj\Debug\net9.0\` to ensure matching libraries.
 
-### Lancer le programme
+### ▶️ Running the Program
 
-Il suffit d'ouvrir un terminal et d'entrer la commande "dotnet run" dans le repertoire /RenduProjetFinalOOM/ProjetFinalOOM et de regarder les retours dans la console.
+- Open a terminal in the `/RenduProjetFinalOOM/ProjetFinalOOM` directory.  
+- Run the command `dotnet run`.  
+- View program output directly in the console.
 
-### FYI
+---
 
-Les commentaires du code ont été optimisés par l'I.A.
+## 📝 Notes
 
-Les initialisations de série ont été complétées par l'I.A. (J'ai fait la structure mais les informations ne sont pas de moi)
+- Code comments were optimized with AI assistance.  
+- Series initializations were supplemented by AI (structure created by me; content provided by AI).
